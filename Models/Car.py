@@ -48,7 +48,7 @@ class Car():
     def set_end_point(self, new_end_point: ACoordinatePair) -> None:
         self._end_point = new_end_point
         
-    def update_position(self, new_point: ACoordinatePair) -> None:
+    def update_position(self) -> None:
         speed_in_ms = self._speed / 3.6  # Convert speed from km/h to m/s
         
         is_path_vertical = self._start_point.x_point == self._end_point.x_point
