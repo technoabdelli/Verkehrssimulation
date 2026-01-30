@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 class ACoordinatePair(ABC):
     @property
     @abstractmethod
-    def y_point(self) -> float:
+    def x_point(self) -> float:
         """Get the X coordinate of the coordinate pair."""
         pass
 
