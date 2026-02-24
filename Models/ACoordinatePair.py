@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 
 class ACoordinatePair(ABC):
+    """An abstract class representing a coordinate pair (x, y) in the traffic simulation."""    
     @property
     @abstractmethod
     def x_point(self) -> float:
