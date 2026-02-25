@@ -1,0 +1,11 @@
+#Beispiel12
+
+[Zeit]
+0
+
+[Einfallspunkte]
+EP1 0
+
+[Kreuzungen]
+K1 0 0
+
