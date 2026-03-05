@@ -1,4 +1,3 @@
-from ast import List
 import random
 
 
@@ -6,7 +5,7 @@ class Node:
     """A class representing a node in the traffic simulation."""
     _x_coordinate: float
     _y_coordinate: float
-    _known_neighbours: List['Node']
+    _known_neighbours: list['Node']
     turning_chance: float
     def __init__(self, x_coordinate: float, y_coordinate: float, turning_chance: float):
         self._x_coordinate = x_coordinate

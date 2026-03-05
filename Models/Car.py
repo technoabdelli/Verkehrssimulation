@@ -1,13 +1,13 @@
-from models import ACoordinatePair
-from models import Node
+from Models.ACoordinatePair import ACoordinatePair
+from Models.Node import Node
 
 
 class Car():
     """A class representing a car in the traffic simulation."""
     _speed: float
     _car_id: int
-    _start_node: 'Node'
-    _end_node: 'Node'
+    _start_node: Node
+    _end_node: Node
     _current_point: ACoordinatePair
 
     def __init__(self, car_id: int, speed: float, start_node: Node,
