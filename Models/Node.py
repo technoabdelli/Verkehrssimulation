@@ -3,26 +3,35 @@ import random
 
 class Node:
     """A class representing a node in the traffic simulation."""
-    _x_coordinate: float
-    _y_coordinate: float
-    _known_neighbours: list['Node']
-    turning_chance: float
-    def __init__(self, x_coordinate: float, y_coordinate: float, turning_chance: float):
-        self._x_coordinate = x_coordinate
-        self._y_coordinate = y_coordinate
-        self.turning_chance = turning_chance
+    node_name: str
+    x_coordinate: float
+    y_coordinate: float
+    known_neighbours: list[tuple['Node', float]]
+    chance: float
+    is_start_node: bool
 
-    def add_neighbours(self, new_node: 'Node'):
-       """Adds a new node to the known neighbour lists to simulate a graph"""
-       if(new_node not in self._known_neighbours):
-          self._known_neighbours.append(new_node)
-    
+    def __init__(self, x_coordinate: float, y_coordinate: float, chance: float, is_start: bool):
+        self.x_coordinate = x_coordinate
+        self.y_coordinate = y_coordinate
+        self.chance = chance
+        self.is_start_node = is_start
+        self.known_neighbours: list[tuple['Node', float]] = []
+
+    def from_row(self, row: list[str]) -> 'Node':
+        """Implements the data from a passed list of data"""
+        self.node_name = row[0]
+        self.x_coordinate = float(row[1])
+        self.y_coordinate = float(row[2])
+
+    def add_neighbours(self, new_node: 'Node', weight: float = 0.0):
+        """Adds neighbouring nodes to form a graph"""
+        if new_node not in [n for n, _ in self.known_neighbours]:
+            self.known_neighbours.append((new_node, weight))
+
     def get_next_node(self) -> 'Node':
-      """Returns a weighted random node from known neighbours based on turning chances."""
-      
-      total_chance = sum(node.turning_chance for node in self._known_neighbours)
-      if total_chance == 0:
-        return random.choice(self._known_neighbours)
-      
-      normalized_chances = [node.turning_chance / total_chance for node in self._known_neighbours]
-      return random.choices(self._known_neighbours, weights=normalized_chances, k=1)[0]
+        """Returns the next node"""
+        nodes, weights = zip(*self.known_neighbours)
+        total = sum(weights)
+        if total == 0:
+            return random.choice(nodes)
+        return random.choices(nodes, weights=[w/total for w in weights], k=1)[0]

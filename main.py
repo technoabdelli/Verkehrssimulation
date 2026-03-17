@@ -1,8 +1,8 @@
 # import sys
 from Utils.FileReader import FileReader
-from Models.simulation import simulation
+from Models.simulation import Simulation
 
-test_simu = simulation()
+test_simu = Simulation()
 
 def main(args):
     """Main entry point for the program, handling cmd-line arguments and starting the simulation."""

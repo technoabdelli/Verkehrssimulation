@@ -1,54 +1,48 @@
-
-from Models.simulation import simulation
+from Models.simulation import Simulation
 
 class FileReader:
-    """A utility class for reading and parsing input files for the traffic simulation."""
+    """A helper class that handles the input file reading and parsing."""
     @staticmethod
-    def read_input_file(file_path: str, simu: simulation) -> None:
-        """Reads the input file and populates the given simulation object.
-
-        The format expected is a parameter header on its own line ending with a
-        colon (for example ``Zeitraum:`` or ``Node:``) followed by a line of
-        space-separated values. This method collects all such settings in a
-        dictionary attached to ``simu`` as ``simu.parameters`` so the simulation
-        logic can access them later.
-        """
-
-        params: dict[str, list[str]] = {}
+    def read_input_file(file_path: str, simu: 'Simulation') -> None:
+        """Method that handles the file reading logic"""
+        params: dict[str, list[list[str]]] = {}
+        current_key: str | None = None
 
         with open(file_path, 'r', encoding='utf-8') as file:
             for raw in file:
                 line = raw.strip()
-                if not line or line.startswith('#'):
-                    # name comment is stored separately
-                    if line.startswith('#'):
-                        name = line.lstrip('#').strip()
-                        simu.name_simulation = name
+
+                if not line:
+                    continue
+
+                if line.startswith('#'):
+                    simu.name_simulation = line.lstrip('#').strip()
+                    current_key = None
                     continue
 
                 if line.endswith(':'):
-                    key = line[:-1]
-                    # consume next non-empty, non-comment line for values
-                    for values_raw in file:
-                        value_line = values_raw.strip()
-                        if value_line and not value_line.startswith('#'):
-                            break
-                    else:
-                        # no more lines
-                        break
-                    params[key] = value_line.split()
+                    current_key = line[:-1]
+                    params[current_key] = []
                 else:
-                    # if you expect standalone lines not prefixed by a parameter, handle
-                    # them here or log a warning
-                    pass
+                    if current_key is not None:
+                        params[current_key].append(line.split())
 
-        setattr(simu, 'parameters', params)
 
-        # example of assigning common parameters directly
-        if 'Zeitraum' in params and len(params['Zeitraum']) >= 2:
-            try:
-                simu.current_time = int(params['Zeitraum'][0])
-                simu.end_time = int(params['Zeitraum'][1])
-            except ValueError:
-                # leave them as strings or handle error
-                simu.current_time, simu.end_time = params['Zeitraum'][:2]
+        if 'Zeitraum' in params and params['Zeitraum']:
+            row = params['Zeitraum'][0]
+            simu.end_time = int(row[0])
+            simu.tick_speed = int(row[1])
+
+        # Pass 1 & 2: create all nodes first
+        for row in params.get('Einfallspunkte', []):
+            simu.add_einfallspunkt(row)
+
+        for row in params.get('Kreuzungen', []):
+            simu.add_node(row)
+
+        # Pass 3 & 4: wire everything now that all nodes exist
+        for row in params.get('Einfallspunkte', []):
+            simu.link_einfallspunkt_neighbour(row)
+
+        for row in params.get('Kreuzungen', []):
+            simu.link_node_neighbours(row)
