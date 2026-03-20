@@ -1,0 +1,10 @@
+pytest==7.4.4
+
+python==3.12.3
+
+matplotlib= 
+
+Numpy= 
+
+pyplot=
+
