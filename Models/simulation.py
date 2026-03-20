@@ -16,9 +16,9 @@ class Simulation:
 
     def run(self):
         """Starts the algorithm to solve the simulation."""
-        currTick = 0;
-        while(currTick <= self.end_time):
-           pass 
+        curr_tick = 0
+        while(curr_tick <= self.end_time):
+           pass
 
     def add_node(self, row: list[str]) -> None:
         """Pass 1: Creates a Kreuzung node and stores it.

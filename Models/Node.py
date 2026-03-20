@@ -35,3 +35,8 @@ class Node:
         if total == 0:
             return random.choice(nodes)
         return random.choices(nodes, weights=[w/total for w in weights], k=1)[0]
+
+    def generate_car_speed(self) -> float:
+        """Generates the speed of a car"""
+        pass
+        
