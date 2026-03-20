@@ -15,7 +15,10 @@ class Simulation:
         self.nodes: dict[str, Node] = {}
 
     def run(self):
-        pass
+        """Starts the algorithm to solve the simulation."""
+        currTick = 0;
+        while(currTick <= self.end_time):
+           pass 
 
     def add_node(self, row: list[str]) -> None:
         """Pass 1: Creates a Kreuzung node and stores it.
