@@ -24,11 +24,7 @@ def main():
     except Exception as e:
         print("Fehler beim Einlesen:", e)
     
-    nodes = daten["Nodes"]
-    edge = Edge(nodes[0], nodes[1])
 
-    print("Von:", edge.startPoint.name)
-    print("Nach:", edge.endPoint.name)
 
 if __name__ == "__main__":
     main()

@@ -7,5 +7,5 @@
 EP1 0
 
 [Kreuzungen]
-K1 0 0
+K1 0 
 
