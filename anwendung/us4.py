@@ -25,3 +25,4 @@ class DateiValidierung:
             for f in fehler:
                 print(f)
             raise Exception("Validierungsfehler: Eingabedatei ungültig.")
+     
