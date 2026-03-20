@@ -1,5 +1,5 @@
 import random
-
+from Models.Car import Car
 
 class Node:
     """A class representing a node in the traffic simulation."""
@@ -38,5 +38,11 @@ class Node:
 
     def generate_car_speed(self) -> float:
         """Generates the speed of a car"""
-        pass
+        car_speed = random.gauss(mu=45, sigma=1)
+
+        if car_speed < 5:
+            car_speed = random.gauss(mu=45, sigma=1)
+        return car_speed
+
+    def generate_car(self) -> 'Car':
         
