@@ -10,9 +10,11 @@ class Simulation:
     allCarsAnyTime: list[list[Car]]
     lastCarId: int
     tick_speed: int
+    next_id: int
 
     def __init__(self):
         self.nodes: dict[str, Node] = {}
+        self.next_id = 0
 
     def run(self):
         """Starts the algorithm to solve the simulation."""

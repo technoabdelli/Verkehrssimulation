@@ -44,5 +44,8 @@ class Node:
             car_speed = random.gauss(mu=45, sigma=1)
         return car_speed
 
-    def generate_car(self) -> 'Car':
+    def generate_car(self, car_id: int) -> 'Car':
+        """Generates a new car based on the parameters of the current node"""
+        new_car = Car(car_id, self.generate_car_speed(), self, self.known_neighbours[0])
+        return new_car
         
