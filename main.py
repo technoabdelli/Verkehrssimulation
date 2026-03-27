@@ -1,33 +1,32 @@
-from anwendung.us1 import DatenEinlesen
-from anwendung.us4 import DateiValidierung
-from modulen.edge import Edge
+# from anwendung.us1 import DatenEinlesen
+# from anwendung.us4 import DateiValidierung
 
 
-def main():
-    try:
-        dateiname = input("Bitte geben Sie die Name Ihre Datei ")
-        daten = DatenEinlesen(dateiname)
-        daten.einlesen()
-        
-        DateiValidierung.validierung(daten)
-        print("\nDatei korrekt eingelesen!\n")
-        print("Zeitraum:", daten.zeitraum.startpunkt, "-", daten.zeitraum.endpunkt)
+# def main():
+#     try:
+#         dateiname = input("Bitte geben Sie die Name Ihre Datei ")
+#         daten = DatenEinlesen(dateiname)
+#         daten.einlesen()
 
-        for ep in daten.einfallspunkte:
-            print("EP:", ep.name, ep.x, ep.y)
+#         DateiValidierung.validierung(daten)
+#         print("\nDatei korrekt eingelesen!\n")
+#         print("Zeitraum:", daten.zeitraum.startpunkt, "-", daten.zeitraum.endpunkt)
 
-        for k in daten.kreuzungen:
-            print("K:", k.name, k.x, k.y)
+#         for ep in daten.einfallspunkte:
+#             print("EP:", ep.name, ep.x, ep.y)
 
-        print("\nSimulation erfolgreich initialisiert \n")
+#         for k in daten.kreuzungen:
+#             print("K:", k.name, k.x, k.y)
 
-    except Exception as e:
-        print("Fehler beim Einlesen:", e)
-    
+#         print("\nSimulation erfolgreich initialisiert \n")
+
+#     except Exception as e:
+#         print("Fehler beim Einlesen:", e)
 
 
-if __name__ == "__main__":
-    main()
+
+# if __name__ == "__main__":
+#     main()
 # import sys
 from Utils.FileReader import FileReader
 from Models.simulation import Simulation
@@ -46,3 +45,4 @@ def main(args):
 if __name__ == "__main__":
     # main(sys.argv)
     FileReader.read_input_file("C:\\Users\\Lisa.Kortkamp\\Documents\\Schul_Dokumente\\LF13\\Montagsprodukt\\Verkehrssimulation\\IHK_01\\Eingabe.txt", test_simu)
+    test_simu.run()

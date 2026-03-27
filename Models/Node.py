@@ -1,5 +1,4 @@
 import random
-from Models.Car import Car
 
 class Node:
     """A class representing a node in the traffic simulation."""
@@ -35,17 +34,3 @@ class Node:
         if total == 0:
             return random.choice(nodes)
         return random.choices(nodes, weights=[w/total for w in weights], k=1)[0]
-
-    def generate_car_speed(self) -> float:
-        """Generates the speed of a car"""
-        car_speed = random.gauss(mu=45, sigma=1)
-
-        if car_speed < 5:
-            car_speed = random.gauss(mu=45, sigma=1)
-        return car_speed
-
-    def generate_car(self, car_id: int) -> 'Car':
-        """Generates a new car based on the parameters of the current node"""
-        new_car = Car(car_id, self.generate_car_speed(), self, self.known_neighbours[0])
-        return new_car
-        
