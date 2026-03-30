@@ -1,4 +1,4 @@
-"""Module providing data collection"""
+"""Module containing the Car class for the traffic simulation."""
 
 from Models.ACoordinatePair import ACoordinatePair
 from Models.Node import Node

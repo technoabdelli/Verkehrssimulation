@@ -1,8 +1,10 @@
+"""Module containing the Simulation class for the traffic simulation."""
 import random
 
 from Models.Node import Node
 from Models.Car import Car
 from Models.car_snapshot import CarSnapshot
+from Utils.FIleWriter import FileWriter
 
 
 class Simulation:
@@ -54,8 +56,9 @@ class Simulation:
                 car.update_position()
 
             curr_tick += 1
+        FileWriter.write_plan_file("plan.txt", self.nodes)
 
-    def generate_car_speed(self) -> float:
+    def gen_car_speed(self) -> float:
         """Generates the speed of a car"""
         car_speed = random.gauss(mu=45, sigma=1)
 
@@ -65,7 +68,7 @@ class Simulation:
 
     def generate_car(self, car_id: int, start_node: Node) -> 'Car':
         """Generates a new car based on the parameters of the current node"""
-        new_car = Car(car_id, self.generate_car_speed(), start_node, start_node.known_neighbours[0][0])
+        new_car = Car(car_id, self.gen_car_speed(), start_node, start_node.known_neighbours[0][0])
         return new_car
 
     def add_node(self, row: list[str]) -> None:

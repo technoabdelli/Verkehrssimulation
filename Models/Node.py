@@ -1,3 +1,5 @@
+"""Module containing the Node class for the traffic simulation."""
+
 import random
 
 class Node:
