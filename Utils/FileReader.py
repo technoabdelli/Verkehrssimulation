@@ -1,3 +1,5 @@
+"""Module containing the FileReader class for reading and parsing the input file."""
+
 from Models.simulation import Simulation
 
 class FileReader:

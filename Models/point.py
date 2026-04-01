@@ -1,6 +1,5 @@
 import math
 
-
 class Point:
     def __init__(self, x_point: float, y_point: float):
         self.xPoint = x_point

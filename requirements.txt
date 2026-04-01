@@ -2,9 +2,7 @@ pytest==7.4.4
 
 python==3.12.3
 
-matplotlib= 
+matplotlib==3.6.3
 
-Numpy= 
-
-pyplot=
+numpy==1.26.4
 

@@ -1,5 +1,4 @@
-from Models.node import node
-
+from Models.Node import node
 class SpawnNode:
     """Class that holds all the data for the different spawn points inside of the simulation."""
     node_name: str
