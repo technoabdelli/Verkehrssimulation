@@ -1,7 +1,8 @@
 from anwendung.us1 import DatenEinlesen
 from anwendung.us4 import DateiValidierung
-from modulen.edge import Edge
-
+from Models.edge import Edge
+from Utils.FileReader import FileReader
+from Models.simulation import Simulation
 
 def main():
     try:
@@ -29,8 +30,7 @@ def main():
 if __name__ == "__main__":
     main()
 # import sys
-from Utils.FileReader import FileReader
-from Models.simulation import Simulation
+
 
 test_simu = Simulation()
 
