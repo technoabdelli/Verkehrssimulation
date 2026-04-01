@@ -16,14 +16,14 @@ class Simulation:
     last_car_id: int
     tick_speed: int
     nodes: dict[str, Node]
-    snapshot_history: list[list[CarSnapshot]]
+    snapshot_history: dict[int, list[CarSnapshot]]
     cars_by_id: dict[int, Car]
 
     def __init__(self):
         self.nodes: dict[str, Node] = {}
         self.all_cars_any_time = []
         self.last_car_id = 0
-        self.snapshot_history = []
+        self.snapshot_history = {}
         self.cars_by_id = {}
 
     def run(self):
@@ -42,7 +42,7 @@ class Simulation:
                     "next_node_y": car.end_node.y_coordinate,
                 })
 
-            self.snapshot_history.append(snapshot)
+            self.snapshot_history[curr_tick] = snapshot
 
             # Generate new cars
             for node in self.nodes.values():
@@ -52,11 +52,12 @@ class Simulation:
                     self.last_car_id += 1
 
             # Update all cars
-            for car in self.cars_by_id.values():
-                car.update_position()
+            self.update_cars()
+            self.remove_inactive_cars()
 
             curr_tick += 1
-        FileWriter.write_plan_file("plan.txt", self.nodes)
+        FileWriter.write_plan_file("Plan.txt", self.nodes)
+        FileWriter.write_cars_file("Fahrzeuge.txt", self.snapshot_history)
 
     def gen_car_speed(self) -> float:
         """Generates the speed of a car"""
@@ -70,6 +71,17 @@ class Simulation:
         """Generates a new car based on the parameters of the current node"""
         new_car = Car(car_id, self.gen_car_speed(), start_node, start_node.known_neighbours[0][0])
         return new_car
+
+    def update_cars(self):
+        """Updates the position of all cars"""
+        for car in self.cars_by_id.values():
+            car.update_position()
+
+    def remove_inactive_cars(self):
+        """Removes all cars that have reached their destination"""
+        self.cars_by_id = {
+            cid: car for cid, car in self.cars_by_id.items() if car.is_active
+        }
 
     def add_node(self, row: list[str]) -> None:
         """Pass 1: Creates a Kreuzung node and stores it.

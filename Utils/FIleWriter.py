@@ -13,6 +13,15 @@ class FileWriter:
                     f.write(f"{node.x_coordinate} {node.y_coordinate} "
                           f"{end_node.x_coordinate} {end_node.y_coordinate}\n")
 
+    @staticmethod
+    def write_cars_file(filename: str, snapshot_history: dict[int, list[dict]]) -> None:
+        """Writes the cars file with the position of all cars at each tick"""
+        with open(filename, 'w', encoding='utf-8') as f:
+            for tick, snapshot in snapshot_history.items():
+                f.write(f"*** t = {tick}\n")
+                for car in snapshot:
+                    f.write(f"{car['x']} {car['y']} "
+                          f"{car['next_node_x']} {car['next_node_y']} {car['car_id']}\n")
 
     @staticmethod
     def write_output_file(file_path: str, snapshot_his: list[list[dict]],
@@ -20,3 +29,4 @@ class FileWriter:
         """Method that handles the file writing logic"""
         with open(file_path, 'w', encoding='utf-8') as file:
             FileWriter.write_plan_file(file, all_streets)
+            FileWriter.write_cars_file(file, snapshot_his)

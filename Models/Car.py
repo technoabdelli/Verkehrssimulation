@@ -8,6 +8,7 @@ class Car():
     _speed: float
     _car_id: int
     _start_node: Node
+    is_active: bool
     end_node: Node
     current_x_position: float
     current_y_position: float
@@ -18,6 +19,7 @@ class Car():
         self._car_id = car_id
         self._speed = speed
         self._start_node = start_node
+        self.is_active = True
         self.end_node = end_node
         self.current_x_position = start_node.x_coordinate
         self.current_y_position = start_node.y_coordinate
@@ -89,7 +91,13 @@ class Car():
                 self.turn_corner()
 
     def turn_corner(self) -> None:
-        """Handles the logic for turning a corner.ys"""
+        """Handles the logic for turning a corner."""        
+        self.current_x_position = self.end_node.x_coordinate
+        self.current_y_position = self.end_node.y_coordinate
+
+        if self.end_node.is_start_node:
+            self.is_active = False
+            return
         new_start_node = self.end_node.get_next_node()
         self._start_node = self.end_node
         self.end_node = new_start_node
