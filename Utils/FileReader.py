@@ -1,5 +1,7 @@
 """Module containing the FileReader class for reading and parsing the input file."""
 
+from pathlib import Path
+
 from Models.simulation import Simulation
 
 class FileReader:
@@ -7,6 +9,9 @@ class FileReader:
     @staticmethod
     def read_input_file(file_path: str, simu: 'Simulation') -> None:
         """Method that handles the file reading logic"""
+        file_path = Path(file_path)
+        simu.name_simulation = file_path.parent.name
+        
         params: dict[str, list[list[str]]] = {}
         current_key: str | None = None
 
@@ -18,8 +23,6 @@ class FileReader:
                     continue
 
                 if line.startswith('#'):
-                    simu.name_simulation = line.lstrip('#').strip()
-                    current_key = None
                     continue
 
                 if line.endswith(':'):

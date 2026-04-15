@@ -28,21 +28,26 @@
 # if __name__ == "__main__":
 #     main()
 # import sys
+from pathlib import Path
 from Utils.FileReader import FileReader
 from Models.simulation import Simulation
 
-test_simu = Simulation()
+Simulation = Simulation()
 
-def main(args):
-    """Main entry point for the program, handling cmd-line arguments and starting the simulation."""
-    if len(args) != 2:
-        print("Usage: python main.py <name>")
-        return
+def main():
+    """Main function to run the traffic simulation for all input files in the specified folder."""
+    base_folder  = Path("Eingabedatei")
 
-    name = args[1]
-    print(f"Hello, {name}!")
+    for file_path in base_folder.rglob("*.txt"):
+        relative_path = file_path.relative_to(base_folder)
+        print(f"Wird bearbeitet: {relative_path}")
+
+        FileReader.read_input_file(file_path, Simulation)
+        Simulation.run()
+        Simulation.reset()  # Reset the simulation for the next file
+        print(f"Wurde fertig bearbeitet: {file_path.name}\n")
+
+    print('Die fertigen Dateien finden Sie im Ordner "Lösungen"')
 
 if __name__ == "__main__":
-    # main(sys.argv)
-    FileReader.read_input_file("C:\\Users\\Lisa.Kortkamp\\Documents\\Schul_Dokumente\\LF13\\Montagsprodukt\\Verkehrssimulation\\IHK_01\\Eingabe.txt", test_simu)
-    test_simu.run()
+    main()

@@ -38,6 +38,8 @@ class Simulation:
                     "car_id": car.get_car_id(),
                     "x": car.current_x_position,
                     "y": car.current_y_position,
+                    "start_node": car.start_node.node_name,
+                    "end_node": car.end_node.node_name,
                     "next_node_x": car.end_node.x_coordinate,
                     "next_node_y": car.end_node.y_coordinate,
                 })
@@ -56,8 +58,7 @@ class Simulation:
             self.remove_inactive_cars()
 
             curr_tick += 1
-        FileWriter.write_plan_file("Plan.txt", self.nodes)
-        FileWriter.write_cars_file("Fahrzeuge.txt", self.snapshot_history)
+        FileWriter.write_output_files(self.name_simulation, self.snapshot_history, self.nodes)
 
     def gen_car_speed(self) -> float:
         """Generates the speed of a car"""
@@ -122,3 +123,10 @@ class Simulation:
         source = self.nodes[row[0]]
         target = self.nodes[row[3]]
         source.add_neighbours(target, weight=0.0)
+
+    def reset(self):
+        """Resets the simulation state for the next run"""
+        self.all_cars_any_time = []
+        self.last_car_id = 0
+        self.snapshot_history = {}
+        self.cars_by_id = {}
