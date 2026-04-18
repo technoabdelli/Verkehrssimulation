@@ -1,5 +1,3 @@
-"""Module containing the Car class for the traffic simulation."""
-
 from Models.ACoordinatePair import ACoordinatePair
 from Models.Node import Node
 
@@ -16,6 +14,12 @@ class Car():
 
     def __init__(self, car_id: int, speed: float, start_node: Node,
                  end_node: Node):
+        if speed < 0:
+            raise ValueError("Geschwindigkeit darf nicht negativ sein")
+        
+        if start_node is None or end_node is None:
+            raise ValueError("Start und Ende dürfen nicht leer sein")
+
         self._car_id = car_id
         self._speed = speed
         self._start_node = start_node

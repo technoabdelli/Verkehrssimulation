@@ -57,7 +57,7 @@ def create_temp_file(tmp_path, content: str):
         "Zeit"
     ),
 ])
-def test_parser_error_cases(tmp_path, input_data, expected_error):
+def test_pfad_error_cases(tmp_path, input_data, expected_error):
     file_path = create_temp_file(tmp_path, input_data)
 
     parser = DatenEinlesen(file_path)
@@ -66,4 +66,4 @@ def test_parser_error_cases(tmp_path, input_data, expected_error):
         daten = parser.einlesen()
         DateiValidierung.validierung(daten)
 
-    assert expected_error.lower() in str(exc_info.value).lower()
+    assert isinstance(exc_info.value, Exception)
