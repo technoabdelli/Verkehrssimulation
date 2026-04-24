@@ -8,3 +8,5 @@ class CarSnapshot(TypedDict):
     y: float
     next_node_x: float
     next_node_y: float
+    start_node: str
+    end_node: str

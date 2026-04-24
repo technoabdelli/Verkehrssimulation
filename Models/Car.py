@@ -5,7 +5,7 @@ class Car():
     """A class representing a car in the traffic simulation."""
     _speed: float
     _car_id: int
-    _start_node: Node
+    start_node: Node
     is_active: bool
     end_node: Node
     current_x_position: float
@@ -22,7 +22,7 @@ class Car():
 
         self._car_id = car_id
         self._speed = speed
-        self._start_node = start_node
+        self.start_node = start_node
         self.is_active = True
         self.end_node = end_node
         self.current_x_position = start_node.x_coordinate
@@ -53,11 +53,11 @@ class Car():
         speed_in_ms = self._speed / 3.6  # km/h -> m/s
         speed_for_algorithm = speed_in_ms / 100
 
-        is_path_vertical = self._start_node.x_coordinate == self.end_node.x_coordinate
-        is_path_horizontal = self._start_node.y_coordinate == self.end_node.y_coordinate
+        is_path_vertical = self.start_node.x_coordinate == self.end_node.x_coordinate
+        is_path_horizontal = self.start_node.y_coordinate == self.end_node.y_coordinate
 
         if is_path_vertical:
-            dy = self.end_node.y_coordinate - self._start_node.y_coordinate
+            dy = self.end_node.y_coordinate - self.start_node.y_coordinate
             direction_y = 1 if dy > 0 else -1  # up or down
             self.current_y_position += direction_y * speed_for_algorithm
 
@@ -67,7 +67,7 @@ class Car():
                 self.turn_corner()
 
         elif is_path_horizontal:
-            dx = self.end_node.x_coordinate - self._start_node.x_coordinate
+            dx = self.end_node.x_coordinate - self.start_node.x_coordinate
             direction_x = 1 if dx > 0 else -1  # right or left
             self.current_x_position += direction_x * speed_for_algorithm
 
@@ -77,8 +77,8 @@ class Car():
 
         else:
             # diagonal / general case: move in both x and y
-            dx = self.end_node.x_coordinate - self._start_node.x_coordinate
-            dy = self.end_node.y_coordinate - self._start_node.y_coordinate
+            dx = self.end_node.x_coordinate - self.start_node.x_coordinate
+            dy = self.end_node.y_coordinate - self.start_node.y_coordinate
 
             direction_x = 1 if dx > 0 else -1
             direction_y = 1 if dy > 0 else -1
@@ -103,5 +103,5 @@ class Car():
             self.is_active = False
             return
         new_start_node = self.end_node.get_next_node()
-        self._start_node = self.end_node
+        self.start_node = self.end_node
         self.end_node = new_start_node
